@@ -21,6 +21,17 @@ public class Document {
 
 	private byte[] content;
 
+	public Document() {
+		super();
+	}
+
+	public Document(Long id, String name, long size) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.size = size;
+	}
+
 	public Long getId() {
 		return id;
 	}
