@@ -24,7 +24,7 @@
 			<th:block th:each="doc : ${listDocs}">
 				<div class="col">
 					<div>
-						<img th:src="@{/images/document1.png}" width="50"/>
+						<img th:src="@{${doc.LogoImagePath}}" width="50"/>
 					</div>
 					<div>
 						<a th:href="@{'/download?id= ' + ${doc.id}}" style="text-decoration: none;">[[${doc.name}]]</a>
@@ -41,7 +41,7 @@
 			<div class="border rounded m-3">
 				<h2>Upload Your Files: </h2>
 				<p>
-					<input type="file" id="fileUpload" name="document" required />
+					<input type="file" id="fileUpload" name="document" accept="image/png,image/jpeg" required/>
 				</p>
 				<p>
 					<input type="submit" value="Upload" class="btn btn-primary" />

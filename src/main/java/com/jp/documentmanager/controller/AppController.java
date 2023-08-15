@@ -1,6 +1,11 @@
 package com.jp.documentmanager.controller;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -52,7 +57,23 @@ public class AppController {
 		document.setContent(mulitpartFile.getBytes());
 		document.setSize(mulitpartFile.getSize());
 		document.setUploadTime(new Date());
-		documentRepository.save(document);
+		Document doc = documentRepository.save(document);
+		String uploadDir = "./brand-logos/" + doc.getId();
+		Path uploadPath = Paths.get(uploadDir);
+		
+		if(!Files.exists(uploadPath)) {
+			Files.createDirectories(uploadPath);
+		}
+		
+		try (InputStream inputStream = mulitpartFile.getInputStream()){
+			Path filePath = uploadPath.resolve(fileName);
+			System.out.println(filePath.toFile().getAbsolutePath());
+			Files.copy(inputStream, filePath,StandardCopyOption.REPLACE_EXISTING);
+		}catch(IOException e) {
+			throw new IOException("Could not save uploaded File: "+fileName);
+		}
+		
+		
 		ra.addFlashAttribute("message", "The file has been uploaded successfully");
 		return "redirect:/";
 	}

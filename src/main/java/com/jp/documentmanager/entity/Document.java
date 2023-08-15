@@ -71,5 +71,14 @@ public class Document {
 	public void setContent(byte[] content) {
 		this.content = content;
 	}
+	
+	@Transient
+	public String getLogoImagePath() {
+		if(name == null || id == null) return null;
+		
+		return "/brand-logos/" + id + "/" + name;
+		
+	}
+	
 
 }
